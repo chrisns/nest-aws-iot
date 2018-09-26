@@ -1,0 +1,26 @@
+version: "3"
+services:
+  nest:
+    read_only: true
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      resources:
+        limits:
+          cpus: '0.40'
+          memory: 128M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 60s
+        max_failure_ratio: 0.3
+    image: chrisns/nest-aws-iot:${DRONE_BUILD_NUMBER}
+    environment:
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
+      - DEVICE_ID=${DEVICE_ID}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_IOT_ENDPOINT_HOST=${AWS_IOT_ENDPOINT_HOST}
+      - AWS_REGION=${AWS_REGION}
