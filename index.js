@@ -5,13 +5,12 @@ const AWSMqtt = require("aws-mqtt-client").default
 const { AWS_IOT_ENDPOINT_HOST, ACCESS_TOKEN, DEVICE_ID } = process.env
 
 const awsMqttClient = new AWSMqtt({
-  endpointAddress: AWS_IOT_ENDPOINT_HOST,
-  logger: console
+  endpointAddress: AWS_IOT_ENDPOINT_HOST
 })
 
-awsMqttClient.on("connect", () => awsMqttClient.subscribe([`$aws/things/nest_${DEVICE_ID}/shadow/update/delta`],
+awsMqttClient.on("connect", () => awsMqttClient.subscribe([`$aws/things/nest_${DEVICE_ID}/shadow/update/documents`],
   { qos: 1 },
-  (err, granted) => console.log("aws", err, granted)
+  (err, granted) => console.log("aws subscribed", granted)
 ))
 
 awsMqttClient.on("error", (error) => console.log(error))
@@ -31,8 +30,9 @@ Cylon.robot({
     )
 
     awsMqttClient.on("message", (topic, message) => {
-      const parsed_message = JSON.parse(message.toString()).state
+      const parsed_message = JSON.parse(message.toString()).current.state
       if (!parsed_message.desired) return
+      console.log(parsed_message)
       Object.entries(parsed_message.desired).forEach(([key, value]) => {
         try {
           my.thermostat[camelCase(key)](value)
