@@ -4,6 +4,11 @@ workflow "Build" {
 }
 
 action "GitHub Action for Docker" {
-  uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
+  uses = "docker://plugins/docker"
   args = "[\"build\", \"-t\", \"nest-aws-iot:latest\", \".\"]"
+  secrets = ["docker_username", "docker_password"]
+  env = {
+    PLUGIN_TAG = "latest"
+    DRONE_COMMIT_SHA = "$GITHUB_SHA"
+  }
 }
