@@ -1,6 +1,6 @@
 workflow "Build" {
-  on = "check_run"
   resolves = ["GitHub Action for Docker"]
+  on = "watch"
 }
 
 action "GitHub Action for Docker" {
