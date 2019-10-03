@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "aws-mqtt-client": "0.0.5",
-    "homebridge-nest": "^3.2.4",
+    "homebridge-nest": "^3.5.1",
     "request-promise": "^4.2.4"
   }
 }
