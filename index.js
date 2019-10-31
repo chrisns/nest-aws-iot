@@ -53,7 +53,10 @@ awsMqttClient.on("connect", () =>
     .then(() => conn.subscribe(update_aws))
 )
 
-awsMqttClient.on("error", (error) => console.log(error))
+awsMqttClient.on("error", error => {
+  console.log(error)
+  process.exit(1)
+})
 
 awsMqttClient.on("message", (topic, message) => {
   const parsed_message = JSON.parse(message.toString()).current.state
