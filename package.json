@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chris Nesbitt-Smith",
   "license": "MIT",
   "dependencies": {
     "aws-mqtt-client": "0.0.5",
-    "homebridge-nest": "^3.2.4",
+    "homebridge-nest": "^3.5.1",
     "request-promise": "^4.2.4"
   }
 }
