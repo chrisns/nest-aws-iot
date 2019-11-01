@@ -1,12 +1,12 @@
 global.log = console
-const rp = require('request-promise');
-const AWSMqtt = require("aws-mqtt-client").default
-const NestMutex = require('./node_modules/homebridge-nest/lib/nest-mutex.js');
+const AWS = require("aws-sdk")
+const AWSMqttClient = require('aws-mqtt/lib/NodeClient')
 
 const { AWS_IOT_ENDPOINT_HOST, ACCESS_TOKEN, USER_ID } = process.env
 
-const awsMqttClient = new AWSMqtt({
-  endpointAddress: AWS_IOT_ENDPOINT_HOST
+const awsMqttClient = new AWSMqttClient({
+  endpoint: AWS_IOT_ENDPOINT_HOST,
+  credentials: AWS.config.credentials
 })
 
 const NestConnection = require('./node_modules/homebridge-nest/lib/nest-connection.js')
@@ -63,3 +63,9 @@ awsMqttClient.on("message", (topic, message) => {
   console.log(device_id, parsed_message.desired)
   return awsMqttClient.publish(topic.replace("/documents", ""), JSON.stringify({ state: { desired: null } }), { qos: 0 })
 })
+
+awsMqttClient.on('connect', error => console.error("ERROR:", error));
+awsMqttClient.on('error', error => console.error("ERROR:", error));
+awsMqttClient.on('close', error => console.error("CLOSE:", error));
+awsMqttClient.on('reconnect', error => console.error("RECONNECT:", error));
+awsMqttClient.on('offline', error => console.error("OFFLINE:", error));

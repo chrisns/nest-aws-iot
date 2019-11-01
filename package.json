@@ -10,8 +10,8 @@
   "author": "Chris Nesbitt-Smith",
   "license": "MIT",
   "dependencies": {
-    "aws-mqtt-client": "0.0.5",
-    "homebridge-nest": "^3.5.1",
-    "request-promise": "^4.2.4"
+    "aws-mqtt": "^1.0.0",
+    "aws-sdk": "^2.561.0",
+    "homebridge-nest": "^3.5.1"
   }
 }
