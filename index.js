@@ -9,7 +9,7 @@ const awsMqttClient = new AWSMqtt({
   endpointAddress: AWS_IOT_ENDPOINT_HOST
 })
 
-const NestConnection = require('./node_modules/homebridge-nest/lib/nest-connection.js');
+const NestConnection = require('./node_modules/homebridge-nest/lib/nest-connection.js')
 
 const const_aws_publish = (device, payload) =>
   awsMqttClient.publish(`$aws/things/nest_${device}/shadow/update`, JSON.stringify({ state: { reported: payload } }), { qos: 0 })
@@ -21,10 +21,11 @@ const update_aws = data =>
     .map(device_type => Object.keys(device_type)
       .map(device => const_aws_publish(device, device_type[device]))
     )
-
-const conn = new NestConnection(ACCESS_TOKEN, console.log, true)
-conn.mutex = new NestMutex(console.log)
-conn.userid = USER_ID
+const config = {
+  access_token: ACCESS_TOKEN,
+  userid: USER_ID
+}
+const conn = new NestConnection(config, console.log, true)
 
 conn.log = console.log
 conn.debug = console.debug
@@ -33,17 +34,9 @@ conn.error = console.error
 
 conn.currentState = {}
 conn.objectList = { objects: [] }
-conn.get_transport_url = () => rp({
-  uri: 'https://home.nest.com/session',
-  headers: {
-    'Authorization': 'Basic ' + ACCESS_TOKEN,
-  },
-  json: true
-}).then(session => conn.transport_url = session.urls.transport_url)
-
 
 awsMqttClient.on("connect", () =>
-  conn.get_transport_url()
+  conn.auth()
     .then(() => conn.updateData())
     .then(data => Object.keys(data.devices.thermostats).map(id => `$aws/things/nest_${id}/shadow/update/documents`))
     .then(topics => awsMqttClient.subscribe(topics,
