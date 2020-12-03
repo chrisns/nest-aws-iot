@@ -1,4 +1,5 @@
 FROM node:alpine as build
+LABEL org.opencontainers.image.source https://github.com/chrisns/nest-aws-iot
 
 WORKDIR /app
 COPY package.json package-lock.json ./
