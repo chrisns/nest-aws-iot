@@ -1,4 +1,5 @@
 global.log = console
+// global.Promise = require("bluebird")
 const AWS = require("aws-sdk")
 const AWSMqttClient = require('aws-mqtt/lib/NodeClient')
 

@@ -12,6 +12,8 @@
   "dependencies": {
     "aws-mqtt": "^1.0.0",
     "aws-sdk": "^2.889.0",
-    "homebridge-nest": "^4.5.3"
+    "bluebird": "^3.7.2",
+    "homebridge-nest": "^4.5.3",
+    "request-promise": "^4.2.6"
   }
 }
