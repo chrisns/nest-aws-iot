@@ -31,11 +31,11 @@ jobs:
           images: |
             ghcr.io/${{ github.repository }}
             ${{ github.repository }}
-#           flavor: |
-#             latest: true
+          flavor: |
+            latest: true
           tags: |
-            type=sha
-            type=edge,enable=true,priority=700,prefix=,suffix=,branch=$repo.default_branch,value=latest
+            type=sha,format=long
+            type=edge,branch=$repo.default_branch
 
 #           tag-sha: true
 #           tag-latest: true
