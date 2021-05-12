@@ -29,8 +29,8 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v1
         with:
           images: |
-            ghcr.io/chrisns/${GITHUB_REPOSITORY}
-            chrisns/${GITHUB_REPOSITORY}
+            ghcr.io/${{ github.repository }}
+            ${{ github.repository }}
           tag-sha: true
           tag-latest: true
           tag-semver: |
