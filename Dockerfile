@@ -1,4 +1,4 @@
-FROM node:16.5.0-alpine as build
+FROM node:16.6.0-alpine as build
 LABEL org.opencontainers.image.source https://github.com/chrisns/nest-aws-iot
 
 WORKDIR /app
