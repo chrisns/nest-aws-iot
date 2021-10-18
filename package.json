@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "aws-mqtt": "^1.0.0",
-    "aws-sdk": "^2.1008.0",
+    "aws-sdk": "^2.1009.0",
     "bluebird": "^3.7.2",
     "homebridge-nest": "^4.6.2",
     "request-promise": "^4.2.6"
